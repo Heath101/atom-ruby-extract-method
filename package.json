@@ -1,0 +1,19 @@
+{
+  "name": "ruby-extract-method",
+  "main": "./lib/ruby-extract-method",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "keywords": [
+  ],
+  "activationCommands": {
+    "atom-workspace": "ruby-extract-method:toggle"
+  },
+  "repository": "https://github.com/atom/ruby-extract-method",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "atom-space-pen-views": "2.1.0"
+  }
+}
