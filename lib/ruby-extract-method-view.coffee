@@ -2,16 +2,12 @@
 
 module.exports =
 class RubyExtractMethodView extends View
-  # constructor: (serializedState) ->
-  #   # Create root element
-  #   @element = document.createElement('div')
-  #   @element.classList.add('ruby-extract-method')
-  #
-  #   # Create message element
-  #   message = document.createElement('div')
-  #   message.textContent = "The RubyExtractMethod package is Alive! It's ALIVE!"
-  #   message.classList.add('message')
-  #   @element.appendChild(message)
+  @content: ->
+    @div class: "extract-method from-top padded", =>
+      @div class: "panel-heading", =>
+        @span "Extract selected text to method"
+      @div class: "panel-body padded", =>
+        @subview 'methodNameEditor', new TextEditorView(mini: true, placeholderText: 'Enter a method name')
 
   # Returns an object that can be retrieved when package is activated
   serialize: ->

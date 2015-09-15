@@ -1,5 +1,5 @@
 RubyExtractMethodView = require './ruby-extract-method-view'
-{CompositeDisposable} = require 'atom'
+{CompositeDisposable, TextBuffer} = require 'atom'
 
 module.exports = RubyExtractMethod =
   rubyExtractMethodView: null
@@ -15,6 +15,8 @@ module.exports = RubyExtractMethod =
 
     # Register command that toggles this view
     @subscriptions.add atom.commands.add 'atom-workspace', 'ruby-extract-method:toggle': => @toggle()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'core:confirm':               => @extract()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'core:cancel':                => @toggle()
 
   deactivate: ->
     @modalPanel.destroy()
@@ -25,9 +27,20 @@ module.exports = RubyExtractMethod =
     rubyExtractMethodViewState: @rubyExtractMethodView.serialize()
 
   toggle: ->
-    console.log 'RubyExtractMethod was toggled!'
-
     if @modalPanel.isVisible()
+      @rubyExtractMethodView.methodNameEditor.setText("")
+      @pane.activate() if @pane
       @modalPanel.hide()
     else
       @modalPanel.show()
+      @rubyExtractMethodView.methodNameEditor.focus()
+
+  extract: ->
+    activeEditor = atom.workspace.getActiveTextEditor()
+    @pane = atom.workspace.getActivePane()
+    methodBody = activeEditor.getSelectedText()
+    methodName = @rubyExtractMethodView.methodNameEditor.getText()
+    rubyMethod =  "def #{methodName}\n  #{methodBody}\nend"
+    activeEditor.insertText(methodName)
+    atom.clipboard.write(rubyMethod, "extracted method definition")
+    @toggle()
