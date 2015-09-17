@@ -15,8 +15,8 @@ module.exports = RubyExtractMethod =
 
     # Register command that toggles this view
     @subscriptions.add atom.commands.add 'atom-workspace', 'ruby-extract-method:toggle': => @toggle()
-    @subscriptions.add atom.commands.add 'atom-workspace', 'core:confirm':               => @extract()
-    @subscriptions.add atom.commands.add 'atom-workspace', 'core:cancel':                => @toggle()
+    @subscriptions.add atom.commands.add 'div.ruby-extract-method', 'core:confirm':      => @extract()
+    @subscriptions.add atom.commands.add 'div.ruby-extract-method', 'core:cancel':       => @toggle()
 
   deactivate: ->
     @modalPanel.destroy()
@@ -40,7 +40,7 @@ module.exports = RubyExtractMethod =
     @pane = atom.workspace.getActivePane()
     methodBody = activeEditor.getSelectedText()
     methodName = @rubyExtractMethodView.methodNameEditor.getText()
-    rubyMethod =  "def #{methodName}\n  #{methodBody}\nend"
+    rubyMethod =  "def #{methodName}\n    #{methodBody}\n  end"
     activeEditor.insertText(methodName)
     atom.clipboard.write(rubyMethod, "extracted method definition")
     @toggle()

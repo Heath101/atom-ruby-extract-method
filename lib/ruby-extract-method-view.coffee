@@ -3,7 +3,7 @@
 module.exports =
 class RubyExtractMethodView extends View
   @content: ->
-    @div class: "extract-method from-top padded", =>
+    @div class: "ruby-extract-method from-top padded", =>
       @div class: "panel-heading", =>
         @span "Extract selected text to method"
       @div class: "panel-body padded", =>
